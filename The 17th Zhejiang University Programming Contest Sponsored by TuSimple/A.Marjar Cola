@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main (int argc, char * argv[]) {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        int x, y, a, b;
+        scanf("%d %d %d %d", &x, &y, &a, &b);
+        int ans = 0;
+        if ((x == 1 || y == 1)) {
+            printf("INF\n");
+        }
+        else {
+            int t;
+            while (a >= x || b >= y) {
+                if (a >= x) {
+                    t = a / x;
+                    ans += t;
+                    b += t;
+                    a %= x;
+                    a += t;
+                }
+                else {
+                    t = b / y;
+                    ans += t;
+                    a += t;
+                    b %= y;
+                    b += t;
+                }
+                if (ans > 1000000) break;
+            }
+            if (ans > 1000000) printf("INF\n");
+            else printf("%d\n", ans);
+        }
+    }
+    return 0;
+}
