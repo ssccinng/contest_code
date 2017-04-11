@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <algorithm>
+
+using namespace std;
+
+char stand[10][8] = {"", "1001111", "0010010", "0000110", 
+                         "1001100", "0100100", "0100000", 
+                         "0001111", "0000000", "0000100"};
+
+int main (int argc, char * argv[]) {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        int N;
+        scanf("%d", &N);
+        char data[7] = {0};
+        char ans[7] = {0};
+        int type, a;
+        for (int i = 0; i < N; ++i) {
+            scanf("%d", &type);
+            for (int i = 0; i < 7; ++i) {
+                scanf("%1d", &a);
+                ans[i] = ans[i] * 2 + a;
+                data[i] = data[i] * 2 + stand[type][i] - '0';
+            }
+        }
+        sort(ans, ans + 7);
+        sort(data, data + 7);
+        int flag = 1;
+        for (int i = 0; i < 7; ++i) {
+            if (ans[i] != data[i]) flag = 0;
+        }
+        if (flag) printf("YES\n");
+        else printf("NO\n");
+    }
+    return 0;
+}
