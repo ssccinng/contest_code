@@ -1,0 +1,69 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <algorithm>
+#include <iostream>
+
+using namespace std;
+
+typedef struct {
+    int l, r;
+    int tag;
+} Inv;
+
+int cmp(const Inv &a, const Inv &b) {
+    return a.r == b.r ? a.l < b.l : a.r < b.r;
+}
+
+bool ininv(Inv a, Inv b, Inv c) {
+    if (c.l > a.r) return false;
+    if (b.l > a.r) return false;
+    return true;
+}
+
+int main(int argc, char *argv[]) {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        int n;
+        scanf("%d", &n);
+        Inv *Invs = new Inv[n];
+        for (int i = 0; i < n; ++i) {
+            scanf("%d %d", &Invs[i].l, &Invs[i].r);
+            Invs[i].tag = i + 1;
+        }
+        sort(Invs, Invs + n, cmp);
+        int cnt = 0;
+        int * ans = new int [n]();
+        Inv ORZ[5];
+        for (int i = 0; i < 5; ++i) {
+        	ORZ[i].l = ORZ[i].r = ORZ[i].tag = 0;
+        }
+        ORZ[0] = Invs[0];
+        ORZ[1] = Invs[1];
+        ORZ[3] = Invs[1];
+        int index = 0;
+        for (int i = 2; i < n; ++i) {
+        	ORZ[4] = Invs[i];
+            if (ininv(ORZ[0], ORZ[1], ORZ[4])) {
+                cnt++;
+                ans[index++] = Invs[i].tag;
+            }
+            else {
+            	ORZ[2] = ORZ[3];
+        		ORZ[3] = ORZ[4];
+            	if (ORZ[3].l <= ORZ[2].r) {
+	            	ORZ[0] = ORZ[2];
+	            	ORZ[1] = ORZ[3];
+	            }
+            }
+        }
+        sort(ans, ans + index);
+        printf("%d\n", cnt);
+        if (cnt) printf("%d", ans[0]);
+        for (int i = 1; i < cnt; ++i) {
+            printf(" %d", ans[i]);
+        }
+        printf("\n");
+    }
+    return 0;
+}
