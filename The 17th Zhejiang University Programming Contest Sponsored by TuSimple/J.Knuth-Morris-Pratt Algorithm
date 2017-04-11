@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <string.h>
+
+int main (int argc, char * argv[]) {
+	int T;
+	scanf("%d", &T);
+	while (T--) {
+		char ans[10000] = {0};
+		scanf("%s", ans);
+		char * p = ans;
+		int cnt = 0;
+		while (p = strstr(p, "dog")) {
+			cnt++;
+			p += 3;
+		}
+		p = ans;
+		while (p = strstr(p, "cat")) {
+			cnt++;
+			p += 3;
+		}
+		printf("%d\n", cnt);
+	}
+	return 0;
+}
