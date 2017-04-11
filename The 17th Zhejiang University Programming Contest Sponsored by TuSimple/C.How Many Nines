@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+bool isleap(int x) {
+    if ((x % 400 == 0) || (x % 4 == 0 && x % 100)) return true;
+    else return false;
+}
+
+int num_Nine(int x) {
+    int cnt = 0;
+    while (x) {
+        if (x % 10 == 9) cnt++;
+        x /= 10;
+    }
+    return cnt;
+}
+
+int main (int argc, char * argv[]) {
+    int years_day[10010];
+    int months_day[13];
+    int days_day[32];
+    int all[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    for (int i = 1; i < 10010; ++i) {
+        if (isleap(i)) years_day[i] = years_day[i - 1] + 366 * num_Nine(i) + 66;
+        else years_day[i] = years_day[i - 1] + 365 * num_Nine(i) + 65;
+    }
+    for (int i = 1; i < 13; ++i) {
+        months_day[i] = months_day[i - 1];
+        if (i == 2) months_day[i] -= 1;
+        if (i == 9) months_day[i] += 30;
+        months_day[i] += 3;
+        all[i] += all[i - 1];
+    }
+    days_day[9] = days_day[19] = days_day[29] = 1;
+    for (int i = 1; i < 32; ++i) {
+        days_day[i] += days_day[i - 1];
+    }
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        int year1, month1, day1, year2, month2, day2;
+        scanf("%d %d %d %d %d %d", &year1, &month1, &day1, &year2, &month2, &day2);
+        int ans = 0;
+        int tag1 = num_Nine(year1), tag2 = num_Nine(year2);
+        bool leap1 = isleap(year1), leap2 = isleap(year2);
+        ans += years_day[year2 - 1] - years_day[year1 - 1];
+        ans += -months_day[month1 - 1] + months_day[month2 - 1];
+        ans -= all[month1 - 1] * tag1; ans += all[month2 - 1] * tag2; 
+        if (month1 > 2 && leap1) ans -= 1 * tag1 + 1;
+        if (month2 > 2 && leap2) ans += 1 * tag2 + 1;
+        if (month1 == 9) ans -= (day1 - 1);
+        if (month2 == 9) ans += (day2);
+        ans += days_day[day2] + tag2 * day2;
+        ans -= days_day[day1 - 1] + tag1 * (day1 - 1);
+        printf("%d\n", ans);
+    }
+    return 0;
+}
