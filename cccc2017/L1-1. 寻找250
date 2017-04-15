@@ -1,0 +1,9 @@
+#include <stdio.h>
+
+int main () {
+  int cnt = 1;
+  int a;
+  while (scanf("%d", &a), a != 250) cnt++;
+  printf("%d", cnt);
+  return 0;
+}
