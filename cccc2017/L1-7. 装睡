@@ -1,0 +1,15 @@
+#include <stdio.h>
+
+int main () {
+  int T;
+  scanf("%d", &T);
+  while (T--) {
+    int a, b;
+    char name[4100] = {0};
+    scanf("%s %d %d", name, &a, &b);
+    if (a > 20 || a < 15 || b > 70 || b < 50) {
+      printf("%s\n", name);
+    }
+  }
+  return 0;
+}
