@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <string.h>
+
+int main(){
+  int a, b;
+  int c, d;
+  scanf("%d %d", &a, &b);
+  int m1[a][b];
+  for (int i = 0; i < a; ++i) {
+    for (int j = 0; j < b; ++j) {
+      scanf("%d", &m1[i][j]);
+    }
+  }
+//  for (int i = 0; i < a; ++i) {
+//    for (int j = 0; j < b; ++j) {
+//      printf("%d ", m1[i][j]);
+//    }
+//    printf("\n");
+//  }
+  scanf("%d %d", &c, &d);
+  if (b != c) {
+    printf("Error: %d != %d", b, c);
+    return 0;
+  }
+  int m2[c][d];
+  for (int i = 0; i < c; ++i) {
+    for (int j = 0; j < d; ++j) {
+      scanf("%d", &m2[i][j]);
+    }
+  }
+  int ans[a][d];
+  memset(ans, 0, sizeof(ans));
+//  for (int i = 0; i < c; ++i) {
+//    for (int j = 0; j < d; ++j) {
+//      printf("%d ", m2[i][j]);
+//    }
+//    printf("\n");
+//  }
+  for (int i = 0; i < a; ++i) {
+    for (int j = 0; j < d; ++j) {
+      for (int k = 0; k < c; ++k) {
+        ans[i][j] += m1[i][k] * m2[k][j];
+      } 
+    }
+  }
+  printf("%d %d\n", a, d);
+  for (int i = 0; i < a; ++i) {
+    printf("%d", ans[i][0]);
+    for (int j = 1; j < d; ++j) {
+      printf(" %d", ans[i][j]);
+    }
+    printf("\n");
+  }
+  return 0;
+}
