@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <map>
+#include <string>
+#include <iostream>
+
+using namespace std;
+
+map<string, string> aa;
+
+int main () {
+  aa["ChuiZi"] = "Bu";
+  aa["Bu"] = "JianDao";
+  aa["JianDao"] = "ChuiZi";
+  int k;
+  cin >> k;
+  k++;
+  string aaa;
+  int cnt = 1;
+  while (cin >> aaa, aaa != "End") {
+    if (cnt % k == 0) {
+      cout << aaa << '\n';
+    }
+    else {
+      cout << aa[aaa] << '\n';
+    }
+    cnt++;
+  }
+  return 0;
+}
