@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <string.h>
+
+struct edge{
+  int a, b;
+};
+
+int main () {
+  int V, E, K;
+  scanf("%d %d %d", &V, &E, &K);
+  edge edges[E];
+  int Cor[V + 1];
+  int kk[V + 1];
+  for (int i = 0; i < E; ++i) {
+    scanf("%d %d", &edges[i].a, &edges[i].b);
+  }
+  int N;
+  scanf("%d", &N);
+  for (int i = 0; i < N; ++i) {
+    int cnt = 0;
+    for (int jj = 0; jj <= V; ++jj) {
+      kk[jj] = 0;
+    }
+    for (int j = 1; j <= V; ++j) {
+      scanf("%d", &Cor[j]);
+      if (!kk[Cor[j]]) {
+        cnt++;
+        kk[Cor[j]] = 1;
+      }
+    }
+    int flag = 1;
+    if (cnt != K) flag = 0;
+    for (int j = 0; j < E; ++j) {
+      if (Cor[edges[j].a] == Cor[edges[j].b]) {
+        flag = 0;
+        break;
+      }
+    }
+    if (flag) printf("Yes\n");
+    else printf("No\n");
+  }
+  return 0;
+}
