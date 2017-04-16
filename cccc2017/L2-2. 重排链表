@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <algorithm>
+
+struct AA {
+  int head, end;
+  int value;
+};
+
+int main () {
+  int Add, N;
+  scanf("%d %d", &Add, &N);
+  AA Nodes[100010];
+  for (int i = 0; i < 100010; ++i) {
+    Nodes[i].end = -77777;
+  }
+  int a, b, c;
+  for (int i = 0; i < N; ++i) {
+    scanf("%d %d %d", &a, &b, &c);
+    Nodes[a].head = a;
+    Nodes[a].value = b;
+    Nodes[a].end = c;
+  }
+  AA * List = new AA[N + 1];
+  int end;
+  List[1] = Nodes[Add];
+  
+  end = List[1].end;
+  int li;
+  for (li = 2; end != -1; ++li) {
+    List[li] = Nodes[end];
+    end = List[li].end;
+  }
+  li--;
+  int i, j;
+  int index = 1;
+  AA * ANS = new AA[N + 2];
+  for (i = li, j = 1; index <= li; index++) {
+    if (index & 1) ANS[index] = List[i], i--;
+    else ANS[index] = List[j], j++;
+//    printf("%05d %d %05d\n", List[i].head, List[i].value, List[j].head);
+//    printf("%05d %d %05d\n", List[j].head, List[j].value, List[i - 1].head);
+  }
+  ANS[li + 1].head = -1;
+  for (int i = 1; i < li; ++i) {
+    printf("%05d %d %05d\n", ANS[i].head, ANS[i].value, ANS[i + 1].head);
+  }
+  printf("%05d %d -1\n", ANS[li].head, ANS[li].value);
+  return 0;
+}
