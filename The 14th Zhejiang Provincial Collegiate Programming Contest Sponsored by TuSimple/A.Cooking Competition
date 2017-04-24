@@ -1,0 +1,29 @@
+//嘛，水题，不多说，无脑统计下就好
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char * argv[]) {
+	int T;
+	scanf("%d", &T);
+	while (T--) {
+		int a = 0, b = 0;
+		int N;
+		scanf("%d", &N);
+		int type;
+		while (N--) {
+			scanf("%d", &type);
+			if (type == 1)
+				a++;
+			else if (type == 2) {
+				b++;
+			}
+		}
+		if (a > b)
+			printf("Kobayashi\n");
+		else if (b > a)
+			printf("Tohru\n");
+		else
+			printf("Draw\n");
+	}
+	return 0;
+}
