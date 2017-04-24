@@ -1,0 +1,63 @@
+//好懒好懒...都懒得编译了...当场一次过..重码时一顿wa...结果竟是忘了读数据
+//这题因为天数跨度很大，所以直接开天数的应该会gg，，也就是离散的处理一下时间点就行，数据甚至在400以内
+//orz，写的差，多担待..
+
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+	int value;
+	int type;
+} day;
+
+int cmp(const void * a, const void * b) {
+	return ((day*)a)->value - ((day*)b)->value;
+}
+
+int main(int argc, char * argv[]) {
+	int T;
+	scanf("%d", &T);
+	while (T--) {
+		int n, m, x, y;
+		scanf("%d %d %d %d", &n, &m, &x, &y);
+		int day_cnt = 2 * (x + y);
+		day * days = new day[day_cnt];
+		int l, r;
+		int index = 0;
+		for (int i = 0; i < x; ++i) {
+			scanf("%d %d", &l, &r);
+			days[index].type = 1;
+			days[index++].value = l;
+			days[index].type = 1;
+			days[index++].value = r;
+		}
+		for (int i = 0; i < y; ++i) {
+			scanf("%d %d", &l, &r);
+			days[index].type = 2;
+			days[index++].value = l;
+			days[index].type = 2;
+			days[index++].value = r;
+		}
+		qsort(days, index, sizeof(day), cmp);
+		int flagA = 0, flagB = 0;
+		int start = 0, ans = 0;
+		for (int i = 0; i < index; ++i) {
+			if (days[i].type == 1) {
+				flagA = (flagA + 1) % 2;
+			}
+			if (days[i].type == 2) {
+				flagB = (flagB + 1) % 2;
+			}
+			if (start && (!flagA || !flagB)) {
+				int temp = days[i].value - start - m + 2;
+				if (temp < 0) temp = 0;
+				ans += temp;
+				start = 0;
+			}
+			if (flagA && flagB) start = days[i].value;
+		}
+		delete[] days;
+		printf("%d\n", ans);
+	}
+	return 0;
+}
