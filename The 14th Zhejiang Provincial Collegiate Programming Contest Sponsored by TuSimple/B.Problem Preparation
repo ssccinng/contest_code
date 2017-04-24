@@ -1,0 +1,33 @@
+//这个也挺水的，，只要把条件判断一下就好...
+//唯一值得一提的是由于英文渣orz，究竟是>=2还是>2争执了一下(虽然有hint)..我果断强行交了一发>2幸好过了orz
+#include <stdio.h>
+#include <algorithm>
+
+using namespace std;
+
+int main(int argc, char * argv[]) {
+	int T;
+	scanf("%d", &T);
+	while (T--) {
+		int N;
+		scanf("%d", &N);
+		int * seq = new int[N];
+		int flag = 1;
+		if (N > 13 || N < 10) flag = 0;
+		for (int i = 0; i < N; ++i) {
+			scanf("%d", seq + i);
+		}
+		sort(seq, seq + N);
+		if (flag && (seq[0] != 1 || seq[1] != 1)) flag = 0;
+		for (int i = 1; i < N - 1; ++i) {
+			if (seq[i] - seq[i - 1] > 2) {
+				flag = 0;
+				break;
+			}
+		}
+		if (flag) printf("Yes\n");
+		else printf("No\n");
+		delete[] seq;
+	}
+	return 0;
+}
