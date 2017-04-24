@@ -1,0 +1,57 @@
+//这题吗，当时由于读题问题先行跳过，其实挺简单的
+//意思也就是根据给定的条件能不能判断出唯一一个人，
+//之前给出了每次询问给出yes的人，既然只有0 1， 最大数据也才21个，就想到转成二进制，这样就可以o1判断是不是了
+//然后map用用，string用用偷懒就过了
+#include <iostream>
+#include <map>
+#include <string>
+
+using namespace std;
+
+int main(int argc, char * argv[]) {
+	ios::sync_with_stdio(false);
+	int T;
+	cin >> T;
+	while (T--) {
+		int N, M;
+		map <string, int> AA;
+		cin >> N >> M;
+		int c;
+		cin >> c;
+		string * Names = new string[c + 1];
+		for (int i = 1; i <= c; ++i) {
+			cin >> Names[i];
+			AA[Names[i]] = i;
+		}
+		int * stand = new int[c + 1]();
+		for (int i = 0; i < M; ++i) {
+			int q;
+			cin >> q;
+			for (int j = 1; j <= c; ++j) {
+				stand[j] <<= 1;
+			}
+			string Name;
+			while (q--) {
+				cin >> Name;
+				stand[AA[Name]]++;
+			}
+		}
+		for (int i = 0; i < N; ++i) {
+			int sum = 0, temp;
+			for (int j = 0; j < M; ++j) {
+				cin >> temp;
+				sum = sum * 2 + temp;
+			}
+			int flag = 0, ans;
+			for (int j = 1; j <= c; ++j) {
+				if (sum == stand[j]) {
+					flag++;
+					ans = j;
+				}
+			}
+			if (flag == 1) cout << Names[ans] << '\n';
+			else cout << "Let's go to the library!!\n";
+		}
+	}
+	return 0;
+}
